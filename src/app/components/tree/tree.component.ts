@@ -47,37 +47,43 @@ export class TreeComponent implements OnInit {
       this.familyTree = data;
       console.log('Family Tree Data:', this.familyTree);
 
+      // Transformar la estructura del JSON
+      const treeData = this.transformToTreeStructure(this.familyTree);
 
+      console.log('Tree Data:', treeData);
 
-      this.createTree(this.familyTree);
-      //Recibe un json con la estructura de la familia
-      /*
-          {
-            "name": "Root",
-            "children": [
-              {
-                "name": "Child 1",
-                "children": [
-                  {
-                    "name": "Grandchild 1",
-                    "children": [
-                      { "name": "Great Grandchild 1" }, // Anidacion infinita
-                      { "name": "Great Grandchild 2" }
-                    ]
-
-                  },
-                  { "name": "Grandchild 2" }
-                ]
-              },
-              {
-                "name": "Child 2"
-              }
-            ]
-          };
-
-      */
+      // Crear el árbol
+      this.createTree(treeData);
     });
   }
+
+  transformToTreeStructure(person: any): any {
+    const transformedPerson = {
+      name: person.personName,
+      children: [] as any[] // Especifica que children es un array de tipo any
+    };
+
+    // Agregar la pareja si existe
+    if (person.partner) {
+      transformedPerson.children.push({
+        name: person.partner.personName,
+        isPartner: true, // Bandera para identificar a la pareja
+        children: [] // La pareja puede tener sus propios hijos, si es necesario
+      });
+    }
+
+    // Recorre las relaciones de padres para agregar a los hijos
+    if (person.fatherRelationships && person.fatherRelationships.length > 0) {
+      person.fatherRelationships.forEach((relationship: any) => {
+        if (relationship.child) {
+          transformedPerson.children.push(this.transformToTreeStructure(relationship.child)); // Usa this para llamar al método
+        }
+      });
+    }
+
+    return transformedPerson;
+  }
+
 
   createTree(data: any) {
     const treeLayout = d3.tree().size([900,1300 ]);
@@ -110,6 +116,7 @@ export class TreeComponent implements OnInit {
         .attr("dy", ".35em")
         .attr("x", d => d.children ? -13 : 13)
         .style('text-anchor', d => d.children ? 'end' : 'start')
+        .style('fill', (d: any) => d.data.isPartner ? 'blue' : 'black')
         .text((d:any) => d.data.name);
   }
 
