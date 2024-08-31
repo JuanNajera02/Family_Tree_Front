@@ -35,6 +35,8 @@ export class TreeComponent implements OnInit {
   @ViewChild('svgElement', { static: true }) svgElement: ElementRef | any;
   familyTree: FamilyTree | null = null;
   data: any;
+  flagDad: boolean = false;
+  flagMom: boolean = false;
 
   constructor(private treeService: TreeService) {
 
@@ -46,7 +48,8 @@ export class TreeComponent implements OnInit {
     this.treeService.getFamilyTree(personId).subscribe((data: FamilyTree) => {
       this.familyTree = data;
       console.log('Family Tree Data:', this.familyTree);
-
+      this.flagDad = false;
+      this.flagMom = false;
       // Transformar la estructura del JSON
       const treeData = this.transformToTreeStructure(this.familyTree);
 
@@ -58,9 +61,10 @@ export class TreeComponent implements OnInit {
   }
 
   transformToTreeStructure(person: any): any {
+
     const transformedPerson = {
       name: person.personName,
-      children: [] as any[] // Especifica que children es un array de tipo any
+      children: [] as any[]
     };
 
     // Agregar la pareja si existe
@@ -72,10 +76,35 @@ export class TreeComponent implements OnInit {
       });
     }
 
-    // Recorre las relaciones de padres para agregar a los hijos
+
+    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagDad) {
+      person.childRelationships.forEach((relationship: any) => {
+        if (relationship.mother) {
+          this.flagDad = true;
+          transformedPerson.children.push({
+            ...this.transformToTreeStructure(relationship.mother),
+            isMother: true
+          }); // Usa this para llamar al método
+        }
+      });
+    }
+
+    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagMom) {
+      person.childRelationships.forEach((relationship: any) => {
+        if (relationship.father) {
+          this.flagMom = true;
+          transformedPerson.children.push({
+            ...this.transformToTreeStructure(relationship.father),
+            isFather: true
+          }); // Usa this para llamar al método
+        }
+      });
+    }
+
+    // Agregar a los padres (padre y madre) si existen en las relaciones de padres
     if (person.fatherRelationships && person.fatherRelationships.length > 0) {
       person.fatherRelationships.forEach((relationship: any) => {
-        if (relationship.child) {
+        if ( relationship && relationship.child ) {
           transformedPerson.children.push(this.transformToTreeStructure(relationship.child)); // Usa this para llamar al método
         }
       });
@@ -116,7 +145,18 @@ export class TreeComponent implements OnInit {
         .attr("dy", ".35em")
         .attr("x", d => d.children ? -13 : 13)
         .style('text-anchor', d => d.children ? 'end' : 'start')
-        .style('fill', (d: any) => d.data.isPartner ? 'blue' : 'black')
+        .style('fill', (d: any) =>{
+          if (d.data.isPartner) {
+            return 'red';
+          } else if (d.data.isFather) {
+            return 'blue';
+          } else if (d.data.isMother) {
+            return 'yellow';
+          } else {
+            return 'black';
+          }
+        })
+
         .text((d:any) => d.data.name);
   }
 
