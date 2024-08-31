@@ -40,6 +40,13 @@ export class PersonListComponent implements OnInit {
     localStorage.setItem('person', JSON.stringify(person));
   }
 
+  generateTree(person: Person): void {
+    console.log('Generate tree for person:', person);
+    this.router.navigate(['/TreeComponent', person]);
+
+  }
+
+
   deletePerson(personId: number): void {
     console.log('Delete person:', personId);
     if (confirm('¿Estás seguro de que quieres eliminar esta persona?')) {

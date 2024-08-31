@@ -25,6 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { TreeComponent } from './components/tree/tree.component';
+import { FullTreeComponent } from './components/full-tree/full-tree.component';
 
 
 
@@ -36,7 +38,9 @@ import { MatSelectModule } from '@angular/material/select';
     HomeComponent,
     PersonFormComponent,
     PersonListComponent,
-    ChildListComponent
+    ChildListComponent,
+    TreeComponent,
+    FullTreeComponent
   ],
   imports: [
     BrowserModule,

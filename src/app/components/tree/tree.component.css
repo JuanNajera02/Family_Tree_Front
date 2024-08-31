@@ -1,0 +1,30 @@
+.node circle {
+  fill: #3498db;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+.node text {
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #3498db;
+  stroke-width: 2px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  /* center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+svg{
+  width: 100%;
+  height: 100%;
+}
