@@ -1,0 +1,39 @@
+.formulario-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+  border: 1px solid #ddd;
+
+}
+
+.submit-button{
+  width: 100%;
+}
+
+.cancel-button{
+  width: 100%;
+}
+
+.children-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+

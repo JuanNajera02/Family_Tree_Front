@@ -1,0 +1,9 @@
+
+
+.tabla{
+  overflow-y: auto;
+  max-height: 900px;
+  overflow-y: auto;
+  width: 100%;
+  border: 1px solid #ddd;
+}

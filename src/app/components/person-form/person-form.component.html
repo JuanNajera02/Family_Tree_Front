@@ -1,4 +1,7 @@
-<h3 class="form-title">Personas</h3>
+
+
+<div class="formulario-center">
+  <h3 class="form-title">Personas</h3>
 
 <form [formGroup]="personForm" (ngSubmit)="onSubmit()" class="person-form">
   <mat-form-field appearance="fill" class="full-width">
@@ -32,3 +35,5 @@
   <button mat-raised-button color="primary" type="submit" class="submit-button">Guardar</button>
   <button mat-raised-button color="warn" type="button" (click)="onCancel()" class="cancel-button">Cancelar</button>
 </form>
+
+</div>

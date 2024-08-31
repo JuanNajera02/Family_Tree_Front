@@ -51,7 +51,7 @@ export class TreeComponent implements OnInit {
       this.flagDad = false;
       this.flagMom = false;
       // Transformar la estructura del JSON
-      const treeData = this.transformToTreeStructure(this.familyTree);
+      const treeData = this.transformToTreeStructure(this.familyTree, 0);
 
       console.log('Tree Data:', treeData);
 
@@ -60,7 +60,12 @@ export class TreeComponent implements OnInit {
     });
   }
 
-  transformToTreeStructure(person: any): any {
+  transformToTreeStructure(person: any, index: number): any {
+
+    if(person.personName === 'Ciclo detectado'){
+      return null;
+    }
+
 
     const transformedPerson = {
       name: person.personName,
@@ -77,35 +82,49 @@ export class TreeComponent implements OnInit {
     }
 
 
-    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagDad) {
+    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagDad && index === 0) {
       person.childRelationships.forEach((relationship: any) => {
         if (relationship.mother) {
           this.flagDad = true;
-          transformedPerson.children.push({
-            ...this.transformToTreeStructure(relationship.mother),
-            isMother: true
-          }); // Usa this para llamar al método
+          var test = this.transformToTreeStructure(relationship.mother, index + 1)
+          if(test){
+            transformedPerson.children.push({
+              ...test,
+              isMother: true // Usa this para llamar al método
+            });
         }
-      });
+        }
+      }
+      );
     }
 
-    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagMom) {
+
+
+    if (person.childRelationships && person.childRelationships.length > 0 && !this.flagMom && index === 0) {
       person.childRelationships.forEach((relationship: any) => {
         if (relationship.father) {
+          var test = this.transformToTreeStructure(relationship.father, index + 1)
+          if(test){
+            transformedPerson.children.push({
+              ...test,
+              isFather: true // Usa this para llamar al método
+            });
           this.flagMom = true;
-          transformedPerson.children.push({
-            ...this.transformToTreeStructure(relationship.father),
-            isFather: true
-          }); // Usa this para llamar al método
+          }
         }
-      });
+      }
+      );
     }
+
 
     // Agregar a los padres (padre y madre) si existen en las relaciones de padres
     if (person.fatherRelationships && person.fatherRelationships.length > 0) {
       person.fatherRelationships.forEach((relationship: any) => {
         if ( relationship && relationship.child ) {
-          transformedPerson.children.push(this.transformToTreeStructure(relationship.child)); // Usa this para llamar al método
+          var test = this.transformToTreeStructure(relationship.child, index + 1)
+          if(test){
+            transformedPerson.children.push(test); // Usa this para llamar al método
+          }
         }
       });
     }
