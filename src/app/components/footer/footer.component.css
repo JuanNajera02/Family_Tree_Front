@@ -1,0 +1,35 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+
+.main-content {
+  padding-bottom: 70px;
+}
+
+/* Estilo del footer */
+.footer {
+  background-color: #004d40;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  padding: 15px 20px;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Contenido del footer */
+.footer-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-content > span {
+  margin: 0;
+}

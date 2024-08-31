@@ -1,0 +1,49 @@
+mat-toolbar {
+  background-color: #e0f7fa; /* Azul claro */
+  color: #004d40; /* Verde oscuro para el texto y los iconos */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+button mat-icon {
+  color: #004d40;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+button[mat-button] {
+  margin-right: 10px; /* Espacio entre botones */
+  color: #004d40; /* Verde oscuro para los botones */
+}
+
+button[mat-button]:hover {
+  background-color: #b2dfdb; /* Verde más claro al hacer hover */
+}
+
+button[mat-icon-button] {
+  margin-right: 20px; /* Espacio adicional para el botón del carrito */
+  color: #004d40; /* Verde oscuro para el ícono del carrito */
+}
+
+button[mat-icon-button]:hover {
+  background-color: #b2dfdb; /* Mismo color de hover */
+}
+
+button[mat-icon-button] mat-icon {
+  font-size: 24px; /* Aumenta el tamaño del ícono del carrito */
+}
+
+mat-toolbar span {
+  font-weight: bold;
+}
+
+mat-toolbar .spacer {
+  flex: 1;
+}
+
+button[mat-button]:last-child {
+  margin-right: 0;
+}

@@ -1,0 +1,34 @@
+<h3 class="form-title">Personas</h3>
+
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()" class="person-form">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="personName">
+  </mat-form-field>
+
+  <div class="selectbox">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Seleccionar Pareja</mat-label>
+      <mat-select formControlName="partnerId">
+        <mat-option [value]="null">Ninguna</mat-option>
+        <mat-option *ngFor="let person of personsWithoutPartner" [value]="person.id">
+          {{ person.personName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <h4 class="center">Seleccionar Hijos</h4>
+  <div formArrayName="childrenIds" class="children-container">
+    <div *ngFor="let person of persons; let i = index" class="child-checkbox">
+      <mat-checkbox
+        [checked]="personForm.get('childrenIds')?.value[i]?.selected"
+        (change)="toggleChild(person.id)">
+        {{ person.personName }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" class="submit-button">Guardar</button>
+  <button mat-raised-button color="warn" type="button" (click)="onCancel()" class="cancel-button">Cancelar</button>
+</form>

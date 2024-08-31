@@ -1,0 +1,42 @@
+/* Asegura que el body y html ocupen toda la altura de la ventana */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Contenedor principal que envuelve el contenido de la página */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Hace que el contenedor ocupe al menos la altura de la ventana */
+}
+
+/* Contenido principal, empuja el footer hacia el fondo */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Estilo del footer */
+.footer {
+  background-color: #004d40;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  padding: 15px 20px;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Contenido del footer */
+.footer-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-content > span {
+  margin: 0;
+}
